@@ -8,10 +8,21 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
+//admin
 export const getAdminLogin = async (email, password) => {
   const response = await api.post('/admin', { email, password });
   return response.data;
 };
+//login User
 
+export const getUserlogin = async (email,password)=>{
+    const response = await api.post('/login',{email,password});
+    return response.data
+}
+
+//registered User
+export const createUser = async (email,username, password) => {
+    const response = await api.post('/register',{email,password,username});
+    return response.data
+}
 export default api;

@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './component/auth/LoginForm';
 import SigUpForm from './component/auth/SignupForm';
 import AdminLogin from './component/auth/AdminLogin';
+import Home from './component/Dashboad/Home';
+
 
 function App() {
   return (
@@ -10,6 +12,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SigUpForm />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
