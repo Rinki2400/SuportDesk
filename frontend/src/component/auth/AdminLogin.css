@@ -1,0 +1,80 @@
+.admin_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: radial-gradient(circle at top left, #e0f7fa, #ffffff);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin_glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: #00c9a7;
+  opacity: 0.15;
+  border-radius: 50%;
+  top: -100px;
+  left: -100px;
+  filter: blur(100px);
+  z-index: 0;
+}
+
+.admin_card {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+
+.admin_logo {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #009688;
+}
+
+.admin_card h2 {
+  margin-bottom: 30px;
+  color: #009688;
+  font-size: 2rem;
+}
+
+.admin_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin_input {
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.admin_input:focus {
+  border-color: #009688;
+}
+
+.admin_button {
+  padding: 14px;
+  background-color: #009688;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin_button:hover {
+  background-color: #00796b;
+}
