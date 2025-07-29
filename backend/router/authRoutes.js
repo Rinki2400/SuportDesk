@@ -5,7 +5,7 @@ const { register, login, createOrLoginAdmin } = require('../controller/authContr
 router.post('/register', register);
 router.post('/login', login);
 
-router.get('/admin/setup', createOrLoginAdmin);
+router.post('/admin', createOrLoginAdmin);
 
 
 module.exports = router;
