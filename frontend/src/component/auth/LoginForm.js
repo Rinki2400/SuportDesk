@@ -5,21 +5,39 @@ import imglaptop from "../../assets/img.png";
 import { getUserlogin } from "../../api/axios";
 
 function LoginForm() {
-   const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate()
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      try {
-        const data = await getUserlogin(email, password);
-        console.log(" Logged In", data);
-      } catch (err) {
-        console.error("Login Error:", err.response?.data?.message || err.message);
-        navigate('/home')
-      }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const data = await getUserlogin(email, password);
+    console.log("Full Login response:", data);
+
+    const token = data.token;
+    const user = {
+      _id: data._id,
+      username: data.username,
+      email: data.email,
+      role: data.role,
     };
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/home");
+    } else {
+      console.warn(" Token not found in response");
+    }
+
+  } catch (err) {
+    console.error("Login failed:", err.message || err);
+    alert("Login failed. Please try again.");
+  }
+};
+
+
   return (
     <div className="page_wrapper">
       <nav className="navbar">
@@ -44,7 +62,7 @@ function LoginForm() {
                   id="email"
                   required
                   value={email}
-                 onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <label htmlFor="email">Enter Email</label>
               </div>
@@ -55,7 +73,7 @@ function LoginForm() {
                   id="password"
                   required
                   value={password}
-                 onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <label htmlFor="password">Enter Password</label>
               </div>

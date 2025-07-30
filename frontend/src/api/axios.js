@@ -21,8 +21,9 @@ export const getUserlogin = async (email,password)=>{
 }
 
 //registered User
-export const createUser = async (email,username, password) => {
-    const response = await api.post('/register',{email,password,username});
-    return response.data
-}
+export const createUser = async (email, password, username) => {
+  const response = await api.post('/register', { email, password, username });
+  return response.data;
+};
+
 export default api;

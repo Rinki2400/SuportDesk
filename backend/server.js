@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv'); 
 const connectDB = require('./config/db');
 const authRoutes = require('./router/authRoutes');
+const ticketRoutes = require('./router/ticketRoutes');
+const authAdmin = require('./router/authAdmin');
 
 dotenv.config(); 
 
@@ -20,6 +22,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin',authAdmin );
+app.use('/api/ticket', ticketRoutes);
 
 app.get('/', (req, res) => res.send('Server is running'));
 
