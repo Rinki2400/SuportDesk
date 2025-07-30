@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const Ticket = require('../models/TicketModel');
 
 exports.createOrLoginAdmin = async (req, res) => {
   try {
@@ -61,5 +62,53 @@ exports.createOrLoginAdmin = async (req, res) => {
   } catch (error) {
     console.error(' Error during admin setup:', error.message);
     return res.status(500).json({ message: 'Server error during admin setup', error: error.message });
+  }
+};
+
+
+// get all ticket
+
+exports.getAlltickesAdmin = async (req, res) => {
+  try {
+    const tickets = await Ticket.find().populate("user", "username email"); 
+    res.status(200).json(tickets);
+  } catch (error) {
+    console.error("Error fetching tickets:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+exports.getAlltickesAdminById = async (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    
+    const ticket = await Ticket.findById(ticketId).populate("user", "username email");
+
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
+
+    res.status(200).json(ticket);
+  } catch (error) {
+    console.error("Error fetching ticket by ID:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.deleteAlltickesAdminById = async (req, res) => {
+  try {
+    const ticketId = req.params.id;
+
+    const deletedTicket = await Ticket.findByIdAndDelete(ticketId);
+
+    if (!deletedTicket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
+
+    res.status(200).json({ message: "Ticket deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting ticket:", error.message);
+    res.status(500).json({ message: "Server error" });
   }
 };

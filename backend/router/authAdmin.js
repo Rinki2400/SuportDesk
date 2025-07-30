@@ -1,8 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { createOrLoginAdmin } = require('../controller/AdminController');
+const {
+  createOrLoginAdmin,
+  getAlltickesAdmin,
+  getAlltickesAdminById,
+  deleteAlltickesAdminById,
+} = require("../controller/AdminController");
+const verifyAdmin = require('../middleware/verifyAdmin.js');
 
-router.post('/admin', createOrLoginAdmin);
-
+router.post("/", createOrLoginAdmin);
+router.get("/tickets",verifyAdmin, getAlltickesAdmin);
+router.get("/ticket/:id",verifyAdmin, getAlltickesAdminById);
+router.delete("/ticket/:id", verifyAdmin,deleteAlltickesAdminById);
 
 module.exports = router;
