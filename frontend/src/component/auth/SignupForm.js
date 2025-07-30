@@ -3,20 +3,29 @@ import "./LoginForm.css";
 import { Link, useNavigate } from "react-router-dom";
 import imglaptop from "../../assets/img.png";
 import { createUser } from "../../api/axios";
+import { validateUserLogin } from "../../utils/validateAdminLogin";
 
 function SigUpForm() {
   const [username, setusername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const errors = validateUserLogin(username, email, password);
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
 
     try {
       const data = await createUser(email, password, username);
       console.log("📦 Full signup response:", data);
 
-      // If backend returns the user and token directly
       const token = data.token;
       const user = {
         _id: data._id,
@@ -25,7 +34,6 @@ function SigUpForm() {
         role: data.role,
       };
 
-      // Save token and user info
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
@@ -47,6 +55,7 @@ function SigUpForm() {
             <div className="title">
               <h1>Sign Up</h1>
             </div>
+
             <div className="login_field">
               <input
                 type="text"
@@ -54,7 +63,9 @@ function SigUpForm() {
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
               />
+              {formErrors.username && <p className="error">{formErrors.username}</p>}
             </div>
+
             <div className="login_field">
               <input
                 type="email"
@@ -62,7 +73,9 @@ function SigUpForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {formErrors.email && <p className="error">{formErrors.email}</p>}
             </div>
+
             <div className="login_field">
               <input
                 type="password"
@@ -70,11 +83,12 @@ function SigUpForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {formErrors.password && <p className="error">{formErrors.password}</p>}
             </div>
 
             <button className="login_btn">Sign Up</button>
             <div className="create">
-              create Account ?{" "}
+              Create Account ?{" "}
               <Link to="/">
                 <span>Login</span>
               </Link>
@@ -82,6 +96,7 @@ function SigUpForm() {
           </form>
         </div>
       </div>
+
       <div className="img_container">
         <div className="first_container"></div>
         <div className="second_container"></div>

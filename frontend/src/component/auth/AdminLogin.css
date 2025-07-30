@@ -78,3 +78,8 @@
 .admin_button:hover {
   background-color: #00796b;
 }
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
