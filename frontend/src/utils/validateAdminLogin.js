@@ -20,8 +20,6 @@ export const validateAdminLogin = (email, password) => {
 export const validateUserLogin = ( password,username) => {
   const errors = {};
 
-
-
   if (!password) {
     errors.password = "Password is required";
   } else if (password.length < 6) {

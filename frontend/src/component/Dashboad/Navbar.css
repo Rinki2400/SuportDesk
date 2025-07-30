@@ -1,0 +1,86 @@
+.custom-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff; 
+  padding: 12px 24px;
+  color: black;
+  position: relative;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+
+.navbar-title h2 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-search {
+  width: 60%;
+  max-width: 400px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid black;
+  font-size: 16px;
+}
+
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 6px;
+}
+
+.profile-name {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.profile-role {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  background-color: white;
+  color: black;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 160px;
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f4f4f4;
+}

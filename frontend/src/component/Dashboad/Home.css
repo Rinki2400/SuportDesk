@@ -1,0 +1,130 @@
+/* Overall layout */
+.home-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #efefef;
+  min-height: 100vh;
+}
+
+.table-section {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 40px auto 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+
+.header-with-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.table-section h2 {
+  font-size: 24px;
+  color: #333333;
+}
+
+.create-ticket-btn {
+  background-color: #dadada;
+  color: black;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-ticket-btn:hover {
+  background-color: #b1aeae; }
+
+/* Table styles */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.styled-table thead {
+  background-color: #dadada;
+ 
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #eef1ff;
+}
+
+/* Status badge styling */
+.badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.badge.open {
+  background-color: #f39c12;
+}
+
+.badge.resolved {
+  background-color: #2ecc71;
+}
+
+.badge.pending {
+  background-color: #e67e22;
+}
+
+/* Optional navbar spacing */
+.navbar {
+  margin-bottom: 30px;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 768px) {
+  .table-section {
+    padding: 15px;
+  }
+
+  .styled-table th,
+  .styled-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .table-section h2 {
+    font-size: 20px;
+  }
+
+  .create-ticket-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .header-with-button {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
