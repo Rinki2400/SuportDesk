@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:2000/api/auth',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:2000/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -10,19 +10,52 @@ const api = axios.create({
 });
 //admin
 export const getAdminLogin = async (email, password) => {
-  const response = await api.post('/admin', { email, password });
+  const response = await api.post('/auth/admin', { email, password });
   return response.data;
 };
 //login User
 
 export const getUserlogin = async (email,password)=>{
-    const response = await api.post('/login',{email,password});
+    const response = await api.post('/auth/login',{email,password});
     return response.data
 }
 
 //registered User
 export const createUser = async (email, password, username) => {
-  const response = await api.post('/register', { email, password, username });
+  const response = await api.post('/auth/register', { email, password, username });
+  return response.data;
+};
+//get ticket
+export const getAllTicket = async () => {
+  const token = localStorage.getItem("token"); 
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.get("/ticket/", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data; 
+};
+
+
+
+//Create ticket
+export const createTicket = async (ticketData) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.post("/ticket/", ticketData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   return response.data;
 };
 
