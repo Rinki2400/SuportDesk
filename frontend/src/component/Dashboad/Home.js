@@ -10,7 +10,6 @@ function Home() {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Moved fetch function outside useEffect so we can reuse it
   const fetchTickets = async () => {
     setLoading(true);
     try {
@@ -28,10 +27,10 @@ function Home() {
     fetchTickets();
   }, []);
 
-  // Callback for modal when a ticket is successfully created
+
   const handleTicketCreated = () => {
-    fetchTickets(); // Re-fetch tickets
-    setShowModal(false); // Close modal
+    fetchTickets(); 
+    setShowModal(false); 
   };
 
   return (
@@ -39,7 +38,7 @@ function Home() {
       <Navbar />
       <div className="table-section">
         <div className="header-with-button">
-          <h2>My Support Tickets</h2>
+          <h2>My Tickets</h2>
           <button className="create-ticket-btn" onClick={() => setShowModal(true)}>
             + Create Ticket
           </button>
@@ -89,7 +88,7 @@ function Home() {
         )}
       </div>
 
-      {/* Pass onClose and onTicketCreated to modal */}
+     
       {showModal && (
         <CreateTicketModal
           onClose={() => setShowModal(false)}

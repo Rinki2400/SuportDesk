@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./CreateTicketModal.css";
 import { createTicket } from "../../api/axios";
+import { toast } from "react-toastify";
+
 
 const CreateTicketModal = ({ onClose, onTicketCreated, userId }) => {
   const [formData, setFormData] = useState({
@@ -24,10 +26,11 @@ const CreateTicketModal = ({ onClose, onTicketCreated, userId }) => {
 
     try {
       await createTicket(ticketPayload);
+      toast.success("Ticket created successfully!");
       onTicketCreated();
       onClose();
     } catch (err) {
-      console.error("Ticket creation failed:", err);
+       toast.error("Failed to create ticket");
     }
   };
 
