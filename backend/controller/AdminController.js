@@ -112,3 +112,22 @@ exports.deleteAlltickesAdminById = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getDashboardStats = async (req, res) => {
+  try {
+    const total = await Ticket.countDocuments();
+    const pending = await Ticket.countDocuments({ status: "pending" });
+    const inProgress = await Ticket.countDocuments({ status: "in progress" });
+    const resolved = await Ticket.countDocuments({ status: "resolved" });
+
+    res.json({
+      total,
+      pending,
+      inProgress,
+      resolved,
+    });
+  } catch (err) {
+    console.error("Dashboard error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

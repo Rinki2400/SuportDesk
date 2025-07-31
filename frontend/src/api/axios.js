@@ -40,7 +40,22 @@ export const getAllTicket = async () => {
 
   return response.data; 
 };
+//admin
+export const getDashboardStats = async () => {
+  const token = localStorage.getItem("token");
 
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.get("/admin/dashboard", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
 
 
 //Create ticket

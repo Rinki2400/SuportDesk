@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AdminDashboard.css";
 import {
   FaTicketAlt,
@@ -15,21 +15,46 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
 } from "recharts";
-import { PieChart, Pie, Cell, Legend } from "recharts";
+
+import { getDashboardStats } from "../../api/axios";
 
 function AdminDashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [stats, setStats] = useState({
+    total: 0,
+    pending: 0,
+    inProgress: 0,
+    resolved: 0,
+  });
 
-  const data = [
-    { name: "Total", value: 150 },
-    { name: "Pending", value: 45 },
-    { name: "In Progress", value: 60 },
-    { name: "Resolved", value: 45 },
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await getDashboardStats();
+        setStats(data);
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error.message);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  const chartData = [
+    { name: "Total", value: stats.total },
+    { name: "Pending", value: stats.pending },
+    { name: "In Progress", value: stats.inProgress },
+    { name: "Resolved", value: stats.resolved },
   ];
 
   return (
     <div className="admin-container">
+      {/* Navbar */}
       <div className="admin-navbar">
         <div className="admin-left">
           <h2 className="admin-title">Admin Dashboard</h2>
@@ -54,6 +79,7 @@ function AdminDashboard() {
         )}
       </div>
 
+      {/* Cards */}
       <div className="admin-dashboard-content">
         <div className="admin-card">
           <div className="admin-card-icon total">
@@ -61,7 +87,7 @@ function AdminDashboard() {
           </div>
           <div className="admin-card-info">
             <h3>Total Tickets</h3>
-            <p>150</p>
+            <p>{stats.total}</p>
           </div>
         </div>
 
@@ -71,7 +97,7 @@ function AdminDashboard() {
           </div>
           <div className="admin-card-info">
             <h3>Pending</h3>
-            <p>45</p>
+            <p>{stats.pending}</p>
           </div>
         </div>
 
@@ -81,7 +107,7 @@ function AdminDashboard() {
           </div>
           <div className="admin-card-info">
             <h3>In Progress</h3>
-            <p>60</p>
+            <p>{stats.inProgress}</p>
           </div>
         </div>
 
@@ -91,17 +117,18 @@ function AdminDashboard() {
           </div>
           <div className="admin-card-info">
             <h3>Resolved</h3>
-            <p>45</p>
+            <p>{stats.resolved}</p>
           </div>
         </div>
       </div>
 
+      {/* Charts */}
       <div className="admin-chart-section">
         <h3>Ticket Status Overview</h3>
         <div className="chart-container">
           <div className="line-chart-box">
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={data}>
+              <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis allowDecimals={false} />
@@ -122,7 +149,7 @@ function AdminDashboard() {
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={data}
+                  data={chartData}
                   dataKey="value"
                   nameKey="name"
                   cx="50%"
@@ -130,7 +157,7 @@ function AdminDashboard() {
                   outerRadius={100}
                   label
                 >
-                  {data.map((entry, index) => (
+                  {chartData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={
