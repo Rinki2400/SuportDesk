@@ -20,7 +20,7 @@ import {
   Cell,
   Legend,
 } from "recharts";
-
+import { useNavigate } from "react-router-dom"; // ✅ Import navigate
 import { getDashboardStats } from "../../api/axios";
 
 function AdminDashboard() {
@@ -31,6 +31,8 @@ function AdminDashboard() {
     inProgress: 0,
     resolved: 0,
   });
+
+  const navigate = useNavigate(); // ✅ useNavigate hook
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -44,6 +46,12 @@ function AdminDashboard() {
 
     fetchStats();
   }, []);
+
+  // ✅ Logout Handler
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken"); // Or the token name you store
+    navigate("/admin-login"); // Redirect to admin login
+  };
 
   const chartData = [
     { name: "Total", value: stats.total },
@@ -74,7 +82,7 @@ function AdminDashboard() {
           <div className="admin-menu">
             <div className="admin-item">Profile</div>
             <div className="admin-item">Settings</div>
-            <div className="admin-item">Logout</div>
+            <div className="admin-item" onClick={handleLogout}>Logout</div>
           </div>
         )}
       </div>

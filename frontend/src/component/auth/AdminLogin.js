@@ -38,12 +38,12 @@ function AdminLogin() {
   };
 
   return (
-    <div className="admin_container">
-      <div className="admin_glow"></div>
-      <div className="admin_card">
-        <div className="admin_logo">🛡️</div>
+    <div className="adminlogin_container">
+      <div className="adminlogin_glow"></div>
+      <div className="adminlogin_card">
+        <div className="adminlogin_logo">🛡️</div>
         <h2>Admin Panel</h2>
-        <form className="admin_form" onSubmit={handleSubmit}>
+        <form className="adminlogin_form" onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Admin Email"
@@ -56,13 +56,13 @@ function AdminLogin() {
           <input
             type="password"
             placeholder="Password"
-            className="admin_input"
+            className="adminlogin_input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           {errors.password && <p className="error">{errors.password}</p>}
 
-          <button type="submit" className="admin_button">
+          <button type="submit" className="adminlogin_button">
             Login
           </button>
         </form>
