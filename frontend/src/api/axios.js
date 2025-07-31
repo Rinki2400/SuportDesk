@@ -10,7 +10,7 @@ const api = axios.create({
 });
 //admin
 export const getAdminLogin = async (email, password) => {
-  const response = await api.post('/auth/admin', { email, password });
+  const response = await api.post('/admin/', { email, password });
   return response.data;
 };
 //login User

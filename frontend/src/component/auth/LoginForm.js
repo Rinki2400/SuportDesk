@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import imglaptop from "../../assets/img.png";
 import { getUserlogin } from "../../api/axios";
 import { validateUserLogin } from "../../utils/validateAdminLogin";
+import { toast } from "react-toastify";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -43,7 +44,7 @@ function LoginForm() {
 
     } catch (err) {
       console.error("Login failed:", err.message || err);
-      alert("Login failed. Please try again.");
+      toast.error("Login failed. Please try again.");
     }
   };
 

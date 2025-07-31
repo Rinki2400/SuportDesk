@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import "./AdminLogin.css";
 import { getAdminLogin } from "../../api/axios";
 import { validateAdminLogin } from "../../utils/validateAdminLogin";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,8 +22,18 @@ function AdminLogin() {
     try {
       const data = await getAdminLogin(email, password);
       console.log("Admin Logged In", data);
+      const token = data.token;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("isAdmin", "true"); 
+        navigate("/admin-dashboard");
+      } else {
+        console.warn("Token not found in response");
+      }
     } catch (err) {
       console.error("Login Error:", err.response?.data?.message || err.message);
+      toast.error("Admin Login failed. Please try again.");
     }
   };
 
