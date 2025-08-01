@@ -1,33 +1,36 @@
-
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:2000/api',
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:2000/api",
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 //admin
 export const getAdminLogin = async (email, password) => {
-  const response = await api.post('/admin/', { email, password });
+  const response = await api.post("/admin/", { email, password });
   return response.data;
 };
 //login User
 
-export const getUserlogin = async (email,password)=>{
-    const response = await api.post('/auth/login',{email,password});
-    return response.data
-}
+export const getUserlogin = async (email, password) => {
+  const response = await api.post("/auth/login", { email, password });
+  return response.data;
+};
 
 //registered User
 export const createUser = async (email, password, username) => {
-  const response = await api.post('/auth/register', { email, password, username });
+  const response = await api.post("/auth/register", {
+    email,
+    password,
+    username,
+  });
   return response.data;
 };
 //get ticket
 export const getAllTicket = async () => {
-  const token = localStorage.getItem("token"); 
+  const token = localStorage.getItem("token");
   if (!token) {
     throw new Error("No token found");
   }
@@ -38,7 +41,7 @@ export const getAllTicket = async () => {
     },
   });
 
-  return response.data; 
+  return response.data;
 };
 
 //Create ticket
@@ -57,7 +60,6 @@ export const createTicket = async (ticketData) => {
   return response.data;
 };
 
-
 //admin
 export const getDashboardStats = async () => {
   const token = localStorage.getItem("admintoken");
@@ -74,8 +76,8 @@ export const getDashboardStats = async () => {
 
   return response.data;
 };
-// get all tickets by admin 
-export const getAlltickesAdmin = async() => {
+// get all tickets by admin
+export const getAlltickesAdmin = async () => {
   const token = localStorage.getItem("admintoken");
 
   if (!token) {
@@ -89,7 +91,7 @@ export const getAlltickesAdmin = async() => {
   });
 
   return response.data;
-}
+};
 //delete ticket
 export const deleteTicket = async (id) => {
   const token = localStorage.getItem("admintoken");
@@ -107,5 +109,20 @@ export const deleteTicket = async (id) => {
   return response.data;
 };
 
+export const updateTicket = async (id, updateData) => {
+  const token = localStorage.getItem("admintoken");
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.put(`/admin/adminticket/${id}`, updateData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
 
 export default api;
