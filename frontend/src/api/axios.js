@@ -90,4 +90,22 @@ export const getAlltickesAdmin = async() => {
 
   return response.data;
 }
+//delete ticket
+export const deleteTicket = async (id) => {
+  const token = localStorage.getItem("admintoken");
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.delete(`/admin/adminticket/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+
+
 export default api;
