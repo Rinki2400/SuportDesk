@@ -46,18 +46,17 @@ function TicketComp() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
- const handleModalSubmit = async () => {
-  try {
-    await updateTicket(selectedTicket._id, formData);
-    toast.success('Ticket updated');
-    setShowModal(false);
-    fetchTickets();
-  } catch (error) {
-    console.error("Update error:", error.response?.data || error.message);
-    toast.error(error.response?.data?.message || 'Update failed');
-  }
-};
-
+  const handleModalSubmit = async () => {
+    try {
+      await updateTicket(selectedTicket._id, formData);
+      toast.success('Ticket updated');
+      setShowModal(false);
+      fetchTickets();
+    } catch (error) {
+      console.error("Update error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || 'Update failed');
+    }
+  };
 
   return (
     <div className="main_ticket_container">
@@ -102,7 +101,7 @@ function TicketComp() {
         </table>
       </div>
 
-      {/* Simple Modal */}
+      {/* Modal */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -116,10 +115,10 @@ function TicketComp() {
             />
             <label>Status:</label>
             <select name="status" value={formData.status} onChange={handleInputChange}>
-              <option value="open">Open</option>
-              <option value="in progress">In Progress</option>
-              <option value="resolved">Resolved</option>
-              <option value="closed">Closed</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Closed">Closed</option>
             </select>
             <div className="modal-buttons">
               <button onClick={handleModalSubmit}>Save</button>
