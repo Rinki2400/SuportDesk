@@ -25,7 +25,7 @@ function AdminLogin() {
       const token = data.token;
 
       if (token) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("admintoken", token);
         localStorage.setItem("isAdmin", "true"); 
         navigate("/admin-dashboard");
       } else {

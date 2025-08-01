@@ -40,23 +40,6 @@ export const getAllTicket = async () => {
 
   return response.data; 
 };
-//admin
-export const getDashboardStats = async () => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    throw new Error("No token found");
-  }
-
-  const response = await api.get("/admin/dashboard", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response.data;
-};
-
 
 //Create ticket
 export const createTicket = async (ticketData) => {
@@ -74,4 +57,37 @@ export const createTicket = async (ticketData) => {
   return response.data;
 };
 
+
+//admin
+export const getDashboardStats = async () => {
+  const token = localStorage.getItem("admintoken");
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.get("/admin/dashboard", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+// get all tickets by admin 
+export const getAlltickesAdmin = async() => {
+  const token = localStorage.getItem("admintoken");
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await api.get("/admin/admintickets", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
 export default api;
