@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./AdminDashboard.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { getAlltickesAdmin, deleteTicket, updateTicket } from "../../api/axios";
+import {
+  getAlltickesAdmin,
+  deleteTicket,
+  updateTicket,
+} from "../../api/axios";
 import { toast } from "react-toastify";
 
 function TicketComp() {
@@ -10,6 +14,10 @@ function TicketComp() {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [formData, setFormData] = useState({ subject: "", status: "" });
   const [filterStatus, setFilterStatus] = useState("");
+  const [filterUser, setFilterUser] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ticketsPerPage = 5;
 
   useEffect(() => {
     fetchTickets();
@@ -59,15 +67,36 @@ function TicketComp() {
     }
   };
 
+  // Filter logic
+  const filteredTickets = tickets.filter((ticket) => {
+    const matchesStatus = filterStatus ? ticket.status === filterStatus : true;
+    const matchesUser = filterUser
+      ? ticket.user?.username?.toLowerCase().includes(filterUser.toLowerCase())
+      : true;
+    return matchesStatus && matchesUser;
+  });
+
+  // Pagination logic
+  const indexOfLastTicket = currentPage * ticketsPerPage;
+  const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
+  const currentTickets = filteredTickets.slice(indexOfFirstTicket, indexOfLastTicket);
+  const totalPages = Math.ceil(filteredTickets.length / ticketsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="main_ticket_container">
       <h2 className="ticket-title">Ticket List</h2>
+
+      {/* Filter Section */}
       <div className="filter-container">
-        <label htmlFor="statusFilter">Filter by Status: </label>
+        <label>Status:</label>
         <select
-          id="statusFilter"
           value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
+          onChange={(e) => {
+            setFilterStatus(e.target.value);
+            setCurrentPage(1); // Reset to page 1 on filter
+          }}
         >
           <option value="">All</option>
           <option value="Open">Open</option>
@@ -75,8 +104,31 @@ function TicketComp() {
           <option value="Resolved">Resolved</option>
           <option value="Closed">Closed</option>
         </select>
+
+        <label>User:</label>
+        <input
+          type="text"
+          placeholder="Search by username"
+          value={filterUser}
+          onChange={(e) => {
+            setFilterUser(e.target.value);
+            setCurrentPage(1); // Reset to page 1 on search
+          }}
+        />
+
+        <button
+          className="reset-filter"
+          onClick={() => {
+            setFilterStatus("");
+            setFilterUser("");
+            setCurrentPage(1);
+          }}
+        >
+          Reset Filters
+        </button>
       </div>
 
+      {/* Ticket Table */}
       <div className="ticketcontainer">
         <table className="ticket-table">
           <thead>
@@ -90,10 +142,10 @@ function TicketComp() {
             </tr>
           </thead>
           <tbody>
-            {tickets.length > 0 ? (
-              tickets.map((ticket, index) => (
+            {currentTickets.length > 0 ? (
+              currentTickets.map((ticket, index) => (
                 <tr key={ticket._id}>
-                  <td>{index + 1}</td>
+                  <td>{indexOfFirstTicket + index + 1}</td>
                   <td>{ticket.user?.username || "N/A"}</td>
                   <td>{ticket.subject}</td>
                   <td>{ticket.status}</td>
@@ -121,6 +173,19 @@ function TicketComp() {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i + 1}
+            onClick={() => paginate(i + 1)}
+            className={currentPage === i + 1 ? "active" : ""}
+          >
+            {i + 1}
+          </button>
+        ))}
       </div>
 
       {/* Modal */}

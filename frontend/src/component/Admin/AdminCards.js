@@ -1,6 +1,6 @@
 
 import React from "react";
-import { FaTicketAlt, FaHourglassHalf, FaTools, FaCheckCircle } from "react-icons/fa";
+import { FaTicketAlt, FaHourglassHalf, FaTools, FaCheckCircle,FaBan  } from "react-icons/fa";
 import "./AdminDashboard.css"
 
 function AdminCards({ stats }) {
@@ -43,6 +43,15 @@ function AdminCards({ stats }) {
         <div className="admin-card-info">
           <h3>Resolved</h3>
           <p>{stats.resolved}</p>
+        </div>
+      </div>
+      <div className="admin-card">
+        <div className="admin-card-icon resolved">
+          <FaBan  />
+        </div>
+        <div className="admin-card-info">
+          <h3>Closed</h3>
+          <p>{stats.closed}</p>
         </div>
       </div>
     </div>

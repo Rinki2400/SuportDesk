@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./component/auth/LoginForm";
-import SignUpForm from "./component/auth/SignupForm"; // ✅ Fixed typo
+import SignUpForm from "./component/auth/SignupForm"; 
 import AdminLogin from "./component/auth/AdminLogin";
 import Home from "./component/Dashboad/Home";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -9,8 +9,11 @@ import AdminDashboard from "./component/Admin/AdminDashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminTicket from "./component/Admin/AdminTicket";
+import { useState } from "react";
 
 function App() {
+  const [refreshFlag, setRefreshFlag] = useState(false);
+
   return (
     <BrowserRouter>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -32,7 +35,7 @@ function App() {
           path="/admin-dashboard"
           element={
             <AdminRoute>
-              <AdminDashboard />
+              <AdminDashboard refreshFlag={refreshFlag} />
             </AdminRoute>
           }
         />
@@ -40,7 +43,7 @@ function App() {
           path="/manage-tickets"
           element={
             <AdminRoute>
-              <AdminTicket />
+              <AdminTicket setRefreshFlag={setRefreshFlag} />
             </AdminRoute>
           }
         />

@@ -39,7 +39,7 @@ function SigUpForm() {
         localStorage.setItem("user", JSON.stringify(user));
         navigate("/home");
       } else {
-        console.warn("⚠️ Token not found in response");
+        console.warn(" Token not found in response");
       }
     } catch (err) {
       console.error("Signup failed:", err.message || err);

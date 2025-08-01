@@ -127,15 +127,17 @@ exports.deleteAlltickesAdminById = async (req, res) => {
 exports.getDashboardStats = async (req, res) => {
   try {
     const total = await Ticket.countDocuments();
-    const pending = await Ticket.countDocuments({ status: "pending" });
-    const inProgress = await Ticket.countDocuments({ status: "in progress" });
-    const resolved = await Ticket.countDocuments({ status: "resolved" });
+    const pending = await Ticket.countDocuments({ status: "Open" });
+    const inProgress = await Ticket.countDocuments({ status: "In Progress" });
+    const resolved = await Ticket.countDocuments({ status: "Resolved" });
+    const closed = await Ticket.countDocuments({ status: "Closed" });
 
     res.json({
       total,
       pending,
       inProgress,
       resolved,
+      closed
     });
   } catch (err) {
     console.error("Dashboard error:", err);

@@ -5,32 +5,30 @@ import AdminNavbar from "./AdminNavbar";
 import AdminCards from "./AdminCards";
 import AdminCharts from "./AdminCharts";
 
-function AdminDashboard() {
+function AdminDashboard({ refreshFlag }) {
   const [stats, setStats] = useState({
     total: 0,
     pending: 0,
     inProgress: 0,
     resolved: 0,
+    closed:0
   });
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data = await getDashboardStats();
-        setStats(data);
-      } catch (error) {
-        console.error("Error fetching dashboard stats:", error.message);
-      }
-    };
+  const fetchStats = async () => {
+    const data = await getDashboardStats();
+    setStats(data);
+  };
+  fetchStats();
+}, [refreshFlag]); 
 
-    fetchStats();
-  }, []);
 
   const chartData = [
     { name: "Total", value: stats.total },
     { name: "Pending", value: stats.pending },
     { name: "In Progress", value: stats.inProgress },
     { name: "Resolved", value: stats.resolved },
+    { name: "Closed", value: stats.closed },
   ];
 
   return (

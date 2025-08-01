@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import { FaChevronDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [username, setUsername] = useState("");
+  const navigate = useNavigate()
 
- useEffect(() => {
-  const userData = localStorage.getItem("user");
-  if (userData) {
-    try {
-      const parsedUser = JSON.parse(userData);
-      setUsername(parsedUser.username || "User");
-    } catch (error) {
-      console.error("Failed to parse user from localStorage:", error);
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        setUsername(parsedUser.username || "User");
+      } catch (error) {
+        console.error("Failed to parse user from localStorage:", error);
+      }
     }
-  }
-}, []);
-
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("user"); 
+    navigate("/"); 
+  };
 
   return (
     <nav className="custom-navbar">
@@ -50,7 +56,9 @@ function Navbar() {
         <div className="dropdown-menu">
           <div className="dropdown-item">Profile</div>
           <div className="dropdown-item">Settings</div>
-          <div className="dropdown-item">Logout</div>
+          <div className="dropdown-item" onClick={handleLogout}>
+            Logout
+          </div>
         </div>
       )}
     </nav>

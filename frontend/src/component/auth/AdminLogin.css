@@ -1,102 +1,114 @@
+/* AdminLogin.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .adminlogin_container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f5f7fa;
-  position: relative;
-  overflow: hidden;
-  font-family: "Segoe UI", sans-serif;
-}
-
-.adminlogin_glow {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  top: 20%;
-  left: 10%;
-
-  z-index: 0;
-}
-
-@keyframes glowMove {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(100px, 50px);
-  }
+  padding: 20px;
 }
 
 .adminlogin_card {
-  background-color: #1e293b;
-  padding: 40px;
+  background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  color: #f8fafc;
+  padding: 40px 30px;
+  width: 360px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .adminlogin_logo {
-  font-size: 3rem;
+  font-size: 48px;
   margin-bottom: 10px;
+  color: #6b7280; /* neutral gray */
+}
+
+h2 {
+  margin: 0;
+  color: #374151; /* dark gray */
+  font-weight: 600;
 }
 
 .adminlogin_form {
+  width: 100%;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 20px;
 }
 
 .admin_input,
 .adminlogin_input {
+  width: 100%;
   padding: 12px 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: #334155;
-  color: #f1f5f9;
-  font-size: 16px;
-  outline: none;
-  transition: background-color 0.3s ease;
-}
-
-.admin_input::placeholder,
-.adminlogin_input::placeholder {
-  color: #94a3b8;
+  font-size: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: #f9fafb;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .admin_input:focus,
 .adminlogin_input:focus {
-  background-color: #475569;
+  border-color: #9ca3af;
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.2);
+  outline: none;
+  background-color: #fff;
 }
 
 .adminlogin_button {
-  background-color: #38bdf8;
-  border: none;
+  width: 100%;
   padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
+  background-color: #4b5563;
+  color: white;
+  font-weight: 600;
   font-size: 16px;
-  color: #0f172a;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .adminlogin_button:hover {
-  background-color: #0ea5e9;
+  background-color: #374151;
 }
 
 .error {
-  color: #f87171;
-  font-size: 14px;
+  color: #dc2626; /* red-600 */
+  font-size: 13px;
+  margin-top: -15px;
+  margin-bottom: -10px;
+  padding-left: 5px;
   text-align: left;
-  margin-top: -10px;
-  margin-bottom: -8px;
-  padding-left: 4px;
+}
+
+/* Optional Glow Effect (subtle) */
+.adminlogin_glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, #e5e7eb, transparent 70%);
+  top: 10%;
+  right: 10%;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(50px);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  .adminlogin_card {
+    width: 90%;
+    padding: 30px 20px;
+  }
 }
