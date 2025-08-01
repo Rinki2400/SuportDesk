@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import './AdminDashboard.css';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { getAlltickesAdmin, deleteTicket, updateTicket } from '../../api/axios'; 
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import "./AdminDashboard.css";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { getAlltickesAdmin, deleteTicket, updateTicket } from "../../api/axios";
+import { toast } from "react-toastify";
 
 function TicketComp() {
   const [tickets, setTickets] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
-  const [formData, setFormData] = useState({ subject: '', status: '' });
+  const [formData, setFormData] = useState({ subject: "", status: "" });
+  const [filterStatus, setFilterStatus] = useState("");
 
   useEffect(() => {
     fetchTickets();
@@ -17,9 +18,9 @@ function TicketComp() {
   const fetchTickets = async () => {
     try {
       const data = await getAlltickesAdmin();
-      setTickets(data.tickets || data); 
+      setTickets(data.tickets || data);
     } catch (error) {
-      toast.error('Error fetching tickets');
+      toast.error("Error fetching tickets");
       console.error(error);
     }
   };
@@ -27,10 +28,10 @@ function TicketComp() {
   const handleDelete = async (id) => {
     try {
       await deleteTicket(id);
-      toast.success('Ticket deleted');
-      fetchTickets(); 
+      toast.success("Ticket deleted");
+      fetchTickets();
     } catch (error) {
-      toast.error('Failed to delete ticket');
+      toast.error("Failed to delete ticket");
       console.error(error);
     }
   };
@@ -43,24 +44,39 @@ function TicketComp() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleModalSubmit = async () => {
     try {
       await updateTicket(selectedTicket._id, formData);
-      toast.success('Ticket updated');
+      toast.success("Ticket updated");
       setShowModal(false);
       fetchTickets();
     } catch (error) {
       console.error("Update error:", error.response?.data || error.message);
-      toast.error(error.response?.data?.message || 'Update failed');
+      toast.error(error.response?.data?.message || "Update failed");
     }
   };
 
   return (
     <div className="main_ticket_container">
       <h2 className="ticket-title">Ticket List</h2>
+      <div className="filter-container">
+        <label htmlFor="statusFilter">Filter by Status: </label>
+        <select
+          id="statusFilter"
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+
       <div className="ticketcontainer">
         <table className="ticket-table">
           <thead>
@@ -83,10 +99,16 @@ function TicketComp() {
                   <td>{ticket.status}</td>
                   <td>{new Date(ticket.createdAt).toLocaleString()}</td>
                   <td>
-                    <button className="icon-btn edit-btn" onClick={() => handleUpdate(ticket)}>
+                    <button
+                      className="icon-btn edit-btn"
+                      onClick={() => handleUpdate(ticket)}
+                    >
                       <FaEdit />
                     </button>
-                    <button className="icon-btn delete-btn" onClick={() => handleDelete(ticket._id)}>
+                    <button
+                      className="icon-btn delete-btn"
+                      onClick={() => handleDelete(ticket._id)}
+                    >
                       <FaTrash />
                     </button>
                   </td>
@@ -114,7 +136,11 @@ function TicketComp() {
               onChange={handleInputChange}
             />
             <label>Status:</label>
-            <select name="status" value={formData.status} onChange={handleInputChange}>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleInputChange}
+            >
               <option value="Open">Open</option>
               <option value="In Progress">In Progress</option>
               <option value="Resolved">Resolved</option>

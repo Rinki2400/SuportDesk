@@ -33,7 +33,6 @@ function AdminNavbar() {
           </div> <div className="admin-item" onClick={() => navigate("/admin-dashboard")}>
             Dashboad
           </div>
-          <div className="admin-item">Settings</div>
           <div className="admin-item" onClick={handleLogout}>
             Logout
           </div>
